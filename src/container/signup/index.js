@@ -10,18 +10,18 @@ class SignupForm extends Form {
     PASSWORD: 'password',
     PASSWORD_AGAIN: 'passwordAgain',
     ROLE: 'role',
-    IS_CONRFIRM: 'isConfirm',
+    IS_CONFIRM: 'isConfirm',
   }
+
   FIELD_ERROR = {
-    IS_EMPTY: 'Escribir en el campo',
-    IS_BIG: 'Un argumento muy largo, por favor, quitar',
-    EMAIL: 'Escribe un correcto email',
+    IS_EMPTY: 'El campo esta vacio',
+    IS_BIG: 'La respuesta es demasiado grande',
+    EMAIL: 'Escribir el email correcto',
     PASSWORD:
-      'la contraseña tiene que ser minimum de 7 caracteres, incluido signos y numeros',
-    PASSWORD_AGAIN: 'Su contraseña tiene que estar igual',
-    NOT_CONFIRM:
-      'Tiene que estar de acuerdo con la politica',
-    ROLE: 'Escoger el usuario',
+      'La contraseña debe tener minimum de 8 degitos incluido numeros y letra grande',
+    PASSWORD_AGAIN: 'Su contraseña debe ser igual',
+    NOT_CONFIRM: 'NO esta de acuerdo con la politica',
+    ROLE: 'Tiene que elegir el usuario',
   }
 
   validate = (name, value) => {
@@ -71,7 +71,8 @@ class SignupForm extends Form {
       this.validateAll()
     } else {
       console.log(this.value)
-      this.setAlert('progress', 'Esta cargando...')
+
+      this.setAlert('progress', 'Завантаження...')
 
       try {
         const res = await fetch('/signup', {

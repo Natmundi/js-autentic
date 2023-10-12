@@ -58,9 +58,9 @@ router.get('/signup', function (req, res) {
 })
 
 router.post('/signup', function (req, res) {
-  const { email, password, role } = reg.body
+  const { email, password, role } = req.body
 
-  console.log(reg.body)
+  console.log(req.body)
 
   if (!email || !password || !role) {
     return res.status(400).json({
@@ -80,6 +80,33 @@ router.post('/signup', function (req, res) {
     })
   }
 })
+
+// ================================================================
+
+// router.get Створює нам один ентпоїнт
+
+// ↙️ тут вводимо шлях (PATH) до сторінки
+router.get('/recovery', function (req, res) {
+  // res.render генерує нам HTML сторінку
+
+  // ↙️ cюди вводимо назву файлу з сontainer
+  return res.render('recovery', {
+    // вказуємо назву контейнера
+    name: 'recovery',
+    // вказуємо назву компонентів
+    component: ['back-button', 'field'],
+
+    // вказуємо назву сторінки
+    title: 'Recovery page',
+    // ... сюди можна далі продовжувати додавати потрібні технічні дані, які будуть використовуватися в layout
+
+    // вказуємо дані,
+    data: {},
+  })
+  // ↑↑ сюди вводимо JSON дані
+})
+
+router.post('/recovery', function (req, res) {})
 
 // Експортуємо глобальний роутер
 module.exports = router

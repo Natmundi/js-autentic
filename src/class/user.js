@@ -10,7 +10,7 @@ class User {
   constructor({ email, password, role }) {
     this.email = email
     this.password = password
-    this.role = User.#convertRole()
+    this.role = User.#convertRole(role)
   }
 
   static #convertRole = (role) => {
@@ -33,6 +33,7 @@ class User {
     this.#list.push(user)
 
     console.log(this.#list)
+    return user
   }
 
   static getByEmail(email) {

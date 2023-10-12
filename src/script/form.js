@@ -3,7 +3,7 @@ export const REG_EXP_EMAIL = new RegExp(
 )
 
 export const REG_EXP_PASSWORD = new RegExp(
-  /^(?=[^\d_].*?\d)\w(\w|[!@#$%]){7,20}/,
+  /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/,
 )
 
 export class Form {
@@ -33,6 +33,7 @@ export class Form {
     const span = document.querySelector(
       `.form__error[name="${name}"]`,
     )
+
     const field = document.querySelector(
       `.validation[name="${name}"]`,
     )
@@ -65,13 +66,15 @@ export class Form {
       }
     })
 
-    const el = document.querySelector('.button')
+    const el = document.querySelector(`.button`)
+
     if (el) {
       el.classList.toggle(
         'button--disabled',
         Boolean(disabled),
       )
     }
+
     this.disabled = disabled
   }
 
@@ -86,7 +89,7 @@ export class Form {
   }
 
   setAlert = (status, text) => {
-    const el = document.querySelector('.alert')
+    const el = document.querySelector(`.alert`)
 
     if (status === 'progress') {
       el.className = 'alert alert--progress'
