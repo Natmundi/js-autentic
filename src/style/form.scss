@@ -34,6 +34,18 @@
 	&:active {
 		opacity: 0.3;
 	}
+
+	&--disabled {
+		opacity: 0.5;
+		cursor: default;
+
+		&:hover,
+		&:active
+		{
+			opacity: 0.5;
+			cursor: default;
+		}
+	}
 }
 
 .alert {
@@ -58,4 +70,14 @@
 			color: s.color(blue);
 
 		}
+
+		&--disabled {
+			display: none;
+		}
+}
+
+.validation {
+	&--active {
+		border-color: s.color(red) !important;
+	}
 }
