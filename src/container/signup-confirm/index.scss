@@ -1,0 +1,23 @@
+@use '../../style' as s;
+
+
+@use '../../style/form.scss' as form;
+
+
+
+.page {
+    display: grid;
+    grid-template-rows: auto 1fr;
+
+    gap: s.space(8);
+    padding: s.space(8) s.space(6);
+    width: 100%;
+    height: 100%;
+
+    &--background {
+        background-image: url("/img/background.svg");
+        background-repeat: no-repeat;
+        background-position: top right;
+    }
+}
+
