@@ -9,7 +9,7 @@
     </header>
 
     <form class="page__section">
-        <h1 class="page__title">Registro</h1>
+        <h1 class="page__title">Entrada</h1>
 
         <div class="form">
             <div class="form__item">
@@ -23,28 +23,14 @@
                 " }}
                 <span name="password" class="form__error">Error</span>
             </div>
-            <div class="form__item">
-                {{> field-password action="signupForm.change" label="Contraseña" name="passwordAgain"
-                placeholder="Escribir contraseña otra vez" }}
-                <span name="passwordAgain" class="form__error">Error</span>
-            </div>
-            <div class="form__item">
-                {{> field-select action="signupForm.change" label="Usuario" name="role" placeholder="Escoger usuario"
-                list=data.role }}
-                <span name="role" class="form__error">Error</span>
-            </div>
-            <div class="form__item">
-                {{> field-checkbox action="signupForm.change" label="Estoy de acuerdo con la politica de la web"
-                name="isConfirm" }}
-                <span name="isConfirm" class="form__error">Error</span>
-            </div>
+
         </div>
 
-        <button onclick="signupForm.submit()" class="button button--disabled" type="button">Registro</button>
+        <button onclick="signupForm.submit()" class="button button--disabled" type="button">Entrada</button>
 
         <span class="alert alert--disabled">Atencion! Error</span>
 
-        <span class="link__prefix">Ha olvidado su contraseña?<a href="/login" class="link">Renovar
+        <span class="link__prefix">Ha olvidado su contraseña?<a href="/recovery" class="link">Renovar
                 contraseña</a></span>
 
     </form>

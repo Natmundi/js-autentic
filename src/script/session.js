@@ -31,4 +31,26 @@ export const loadSession = () => {
   }
 }
 
-export const getTokenSession = () => {}
+export const getTokenSession = () => {
+  try {
+    const session = getSession()
+
+    return session ? session.token : null
+  } catch (er) {
+    console.log(er)
+    return null
+  }
+}
+
+export const getSession = () => {
+  try {
+    const session =
+      JSON.parse(localStorage.getItem(SESSION_KEY)) ||
+      window.session
+
+    return session || null
+  } catch (er) {
+    console.log(er)
+    return null
+  }
+}

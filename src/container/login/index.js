@@ -1,19 +1,21 @@
-import { Form } from '../../script/form'
-
 import {
-  saveSession,
-  getTokenSession,
-  getSession,
-} from '../../script/session'
+  Form,
+  REG_EXP_EMAIL,
+  REG_EXP_PASSWORD,
+} from '../../script/form'
 
-class SignupConfirmForm extends Form {
+import { saveSession } from '../../script/session'
+
+class SignupForm extends Form {
   FIELD_NAME = {
-    CODE: 'codigo',
+    EMAIL: 'email',
+    PASSWORD: 'password',
   }
 
   FIELD_ERROR = {
     IS_EMPTY: 'El campo esta vacio',
     IS_BIG: 'La respuesta es demasiado grande',
+    EMAIL: 'Escribir el email correcto',
   }
 
   validate = (name, value) => {
@@ -24,6 +26,12 @@ class SignupConfirmForm extends Form {
     if (String(value).length > 20) {
       return this.FIELD_ERROR.IS_BIG
     }
+
+    if (name === this.FIELD_NAME.EMAIL) {
+      if (!REG_EXP_EMAIL.test(String(value))) {
+        return this.FIELD_ERROR.EMAIL
+      }
+    }
   }
   submit = async () => {
     if (this.disabled === true) {
@@ -31,10 +39,10 @@ class SignupConfirmForm extends Form {
     } else {
       console.log(this.value)
 
-      this.setAlert('progress', 'Esta cargando...')
+      this.setAlert('progress', 'Завантаження...')
 
       try {
-        const res = await fetch('/signup-confirm', {
+        const res = await fetch('/login', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -59,36 +67,18 @@ class SignupConfirmForm extends Form {
 
   convertData = () => {
     return JSON.stringify({
-      [this.FIELD_NAME.CODE]: Number(
-        this.value[this.FIELD_NAME.CODE],
-      ),
-      token: getTokenSession(),
+      [this.FIELD_NAME.EMAIL]:
+        this.value[this.FIELD_NAME.EMAIL],
+      [this.FIELD_NAME.PASSWORD]:
+        this.value[this.FIELD_NAME.PASSWORD],
     })
   }
 }
 
-window.signupConfirmForm = new SignupConfirmForm()
+window.signupForm = new SignupForm()
 
 document.addEventListener('DOMContentLoaded', () => {
-  try {
-    if (window.session) {
-      if (window.session.user.isConfirm) {
-        location.assign('/')
-      }
-    } else {
-      location.assign('/')
-    }
-  } catch (e) {}
-
-  document
-    .querySelector('#renew')
-    .addEventListener('click', (e) => {
-      e.preventDefault()
-
-      const session = getSession()
-
-      location.assign(
-        `/signup-confirm?renew=true&email=${session.user.email}`,
-      )
-    })
+  if (window.session) {
+    location.assign('/')
+  }
 })

@@ -11,8 +11,9 @@
     <form class="page__section">
         <h1 class="page__title">Confirmacion del email</h1>
 
-        <p class="page__subtitle">Se ha enviado un código de verificación de cuenta a su correo electrónico. Insértelo
-            aquí</p>
+        <p class="page__subtitle">Se ha enviado un código de verificación de la cuenta a su correo electrónico.
+            Insértelo
+            en este campo.</p>
 
         <div class="form">
             <div class="form__item">
@@ -23,10 +24,12 @@
 
         </div>
 
-        <button onclick="signupConfirmForm.submit()" class="button button--disabled" type="button">Confirmar
-            email</button>
+        <button onclick="signupConfirmForm.submit()" class="button button--disabled" type="button">Confirmar</button>
 
         <span class="alert alert--disabled">Atencion! Error</span>
+
+        <span class="link__prefix">Ha perdido su contraseña?<a href="/signup-confirm" class="link" id="renew">Enviar
+                otra vez</a></span>
 
     </form>
 </div>

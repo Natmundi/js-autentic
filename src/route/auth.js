@@ -84,6 +84,8 @@ router.post('/signup', function (req, res) {
 
     const session = Session.create(newUser)
 
+    Confirm.create(newUser.email)
+
     return res.status(200).json({
       message: 'Usuario registrado con exito',
       session,
@@ -221,6 +223,11 @@ router.post('/recovery-confirm', function (req, res) {
 })
 
 router.get('/signup-confirm', function (req, res) {
+  const { renew, email } = req.query
+  if (renew) {
+    Confirm.create(email)
+  }
+
   return res.render('signup-confirm', {
     name: 'signup-confirm',
 
@@ -231,6 +238,97 @@ router.get('/signup-confirm', function (req, res) {
     data: {},
   })
 })
+
+router.post('/signup-confirm', function (req, res) {
+  const { codigo, token } = req.body
+  if (!codigo || !token) {
+    return res.status(400).json({
+      message: ' Error! Necesita rellenar los campos!',
+    })
+  }
+
+  try {
+    const session = Session.get(token)
+
+    if (!session) {
+      return res.status(400).json({
+        message: 'Error! No ha podido entrar a su cuenta',
+      })
+    }
+    const email = Confirm.getData(codigo)
+    if (!email) {
+      return res.status(400).json({
+        message: 'Este codigo no existe!',
+      })
+    }
+
+    if (email !== session.user.email) {
+      return res.status(400).json({
+        message: 'El codigo no es valido!',
+      })
+    }
+
+    const user = User.getByEmail(session.user.email)
+    user.isConfirm = true
+    session.user.isConfirm = true
+
+    return res.status(200).json({
+      message: 'Su correo esta confirmado.',
+      session,
+    })
+  } catch (err) {
+    return res.status(400).json({
+      message: err.message,
+    })
+  }
+})
+
+router.get('/login', function (req, res) {
+  return res.render('login', {
+    name: 'login',
+    component: ['back-button', 'field', 'field-password'],
+    title: 'Login page',
+
+    data: {},
+  })
+})
+
+router.post('/login', function (req, res) {
+  const { email, password } = req.body
+  if (!email || !password) {
+    return res.status(400).json({
+      message: 'Error! Debe escribir email y contraseña!',
+    })
+  }
+
+  try {
+    const user = User.getByEmail(email)
+    if (!user) {
+      return res.status(400).json({
+        message: 'Erorr! NO existe usuario con este email.',
+      })
+    }
+    if (user.password !== password) {
+      return res.status(400).json({
+        message: 'Error! La contraseña es incorrecta.',
+      })
+    }
+
+    const session = Session.create(user)
+
+    return res.status(200).json({
+      message: 'Usted entro.',
+      session,
+    })
+  } catch (err) {
+    res.status(400).json({
+      message: err.message,
+    })
+  }
+
+  console.log(email, password)
+})
+
 
 // Експортуємо глобальний роутер
 module.exports = router
