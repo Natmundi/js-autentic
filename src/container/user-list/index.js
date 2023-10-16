@@ -1,4 +1,5 @@
 import { List } from '../../script/list'
+import { USER_ROLE } from '../../script/user'
 
 class UserList extends List {
   constructor() {
@@ -37,6 +38,55 @@ class UserList extends List {
       })
     }
   }
+
+  convertData = (data) => {
+    return {
+      ...data,
+      list: data.list.map((user) => ({
+        ...user,
+        role: USER_ROLE[user.role],
+      })),
+    }
+  }
+
+  updateView = () => {
+    this.element.innerHTML = ''
+    console.log(this.status, this.data)
+
+    switch (this.status) {
+      case this.STATE.LOADING:
+        this.element.innerHTML = `
+        <div class="user">
+          <span class="user__title skeleton"></span>
+          <span class="user__subtitle skeleton"></span>
+        </div>
+        <div class="user">
+          <span class="user__title skeleton"></span>
+          <span class="user__subtitle skeleton"></span>
+        </div>
+        <div class="user">
+          <span class="user__title skeleton"></span>
+          <span class="user__subtitle skeleton"></span>
+        </div>
+      `
+        break
+      case this.STATE.SUCCESS:
+        this.data.list.forEach((item) => {
+          this.element.innerHTML += `
+          <a href="/user-item?id=${item.id}" class="user user--click">
+            <span class="user__title">${item.email}</span>
+            <span class="user__subtitle">${item.role}</span>
+          </a>
+        `
+        })
+        break
+      case this.STATE.ERROR:
+        this.element.innerHTML = `
+					<span class="alert alert--error">${this.data.message}</span>
+				`
+        break
+    }
+  }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -45,4 +95,6 @@ document.addEventListener('DOMContentLoaded', () => {
       location.assign('/')
     }
   } catch (e) {}
+
+  new UserList()
 })
