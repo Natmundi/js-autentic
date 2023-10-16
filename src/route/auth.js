@@ -22,7 +22,7 @@ router.get('/signup', function (req, res) {
   // res.render генерує нам HTML сторінку
 
   // ↙️ cюди вводимо назву файлу з сontainer
-  res.render('signup', {
+  return res.render('signup', {
     // вказуємо назву контейнера
     name: 'signup',
     // вказуємо назву компонентів
@@ -328,7 +328,6 @@ router.post('/login', function (req, res) {
 
   console.log(email, password)
 })
-
 
 // Експортуємо глобальний роутер
 module.exports = router

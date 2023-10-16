@@ -48,6 +48,8 @@ class User {
       ) || null
     )
   }
+
+  static getList = () => this.#list
 }
 module.exports = {
   User,
